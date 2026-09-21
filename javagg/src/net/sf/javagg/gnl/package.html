@@ -1,0 +1,34 @@
+<html>
+<body>
+This package contains basic implementations for client server classes.
+It facilitates the communications models below.
+
+ * Game-->Server
+ * Game-->Server-->Client-->View
+ * Game-->Server-->All Clients-->View
+ * Server-->Game
+ * Server-->Client-->View
+ * Server-->All Clients-->View
+ * Client-->Server
+ * Client-->Server-->Game
+ * Client-->Server-->All Clients-->View
+ * Client-->Server-->Client-->View
+ * 
+ 
+ The basic classes are Client Server
+ Next we have ChatClient and ChatServer with functionality specially for Chat.
+ Then GameClient and GameServer with added functions for dealing with the Game and 
+ with the GameView. Client in this case is merely used by the View. And GameServer
+ is used by the Game. 
+ 
+ This should make GameView and Game coding easy such that the Client Server sources
+ and actions are more or less transparent. 
+<p>
+UML diagrams<br>
+<a href="uml.gif"><img src="uml.gif" width="200"height="200"></a>
+<p>
+@author Larry Gray<br>
+@version 1.2<br>
+
+</body>
+</html>

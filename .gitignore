@@ -1,0 +1,10 @@
+out/
+*.class
+*.bak
+*.orig
+output.txt
+zulu*/
+*.tar.gz
+node_modules/
+.DS_Store
+.idea/

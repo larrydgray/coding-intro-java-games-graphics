@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subrealms>
+	<subrealm realm="california" name="Baytown" id="baytown">
+	  <descript>
+	      Baytown is a low land area near the ocean in California. Its a good place for an
+	      adventurer to begin his adventure. Its a small fishing village surrounded by hills, desert, forest, mountains.
+	      You may even find a volcano and a cave nearby. 
+	  </descript>
+	</subrealm>
+	<!--  
+	<subrealm>
+	</subrealm>
+	-->
+</subrealms>

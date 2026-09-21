@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map name="chess" rows="8" cols="8">
+  <image_strip name="3games.png">
+    <tile mapCode="bn" col="0" row="0" />
+    <tile mapCode="wn" col="1" row="0" />
+    <tile mapCode="bb" col="2" row="0" />
+    <tile mapCode="wb" col="3" row="0" />
+    <tile mapCode="br" col="4" row="0" />
+    <tile mapCode="wr" col="5" row="0" />
+    <tile mapCode="bk" col="0" row="1" />
+    <tile mapCode="wk" col="1" row="1" />
+    <tile mapCode="bp" col="2" row="1" />
+    <tile mapCode="wp" col="3" row="1" />
+    <tile mapCode="bq" col="4" row="1" />
+    <tile mapCode="wq" col="5" row="1" />
+    <tile mapCode="bl" col="0" row="4" />
+    <tile mapCode="bd" col="0" row="5" />
+    <tile mapCode="Bl" col="1" row="4" />
+    <tile mapCode="Bd" col="1" row="5" />
+  </image_strip>
+  <layer name="board">
+    <row number="0">|bp|bp|Bl|Bd|Bl|Bd|Bl|Bd|</row>
+    <row number="1">|bp|bp|Bd|Bl|Bd|Bl|Bd|Bl|</row>
+    <row number="2">|bp|bp|Bl|Bd|Bl|Bd|bl|bd|</row>
+    <row number="3">|Bd|Bl|Bd|Bl|Bd|Bl|bd|bl|</row>
+    <row number="4">|Bl|Bd|Bl|Bd|Bl|Bd|Bl|Bd|</row>
+    <row number="5">|Bd|Bl|Bd|Bl|Bd|Bl|wp|wp|</row>
+    <row number="6">|Bl|Bd|Bl|Bd|Bl|Bd|wp|wp|</row>
+    <row number="7">|Bd|Bl|Bd|Bl|Bd|Bl|wp|wp|</row>
+  </layer>
+  <layer name="pieces">
+    <row number="0">|bp|bp|bb|bq|bk|bb|bn|br|</row>
+    <row number="1">|bp|bp|bp|bp|bp|bp|bp|bp|</row>
+    <row number="2">|  |  |  |bp|  |  |  |  |</row>
+    <row number="3">|  |  |  |bp|  |  |  |  |</row>
+    <row number="4">|  |  |  |  |bp|bk|bp|  |</row>
+    <row number="5">|  |  |  |wb|  |  |  |  |</row>
+    <row number="6">|wp|wp|wp|wp|wp|wp|wp|wp|</row>
+    <row number="7">|wr|wn|wb|wq|wk|wb|wp|wp|</row>
+  </layer>
+</map>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map name="mapname" rows="10" cols="10" >
+  <image_Strip name="3games.png">
+  	<tile mapCode="bn" col="0" row="0"/>
+  	<tile mapCode="ln" col="1" row="0"/>
+  	<tile mapCode="bb" col="2" row="0"/>
+  	<tile mapCode="lb" col="3" row="0"/>
+  	<tile mapCode="br" col="4" row="0"/>
+  	<tile mapCode="lr" col="5" row="0"/>
+  	<tile mapCode="bk" col="0" row="1"/>
+  	<tile mapCode="lk" col="1" row="1"/>
+  	<tile mapCode="bp" col="2" row="1"/>
+  	<tile mapCode="lp" col="3" row="1"/>
+  	<tile mapCode="bq" col="4" row="1"/>
+  	<tile mapCode="lq" col="5" row="1"/>
+  	
+  	<tile mapCode="gr" col="0" row="2"/>
+  	<tile mapCode="ow" col="1" row="0"/>
+  	<tile mapCode="ob" col="2" row="0"/>
+  	
+  	<tile mapCode="rc" col="5" row="2"/>
+  	<tile mapCode="rK" col="5" row="3"/>
+  	<tile mapCode="bc" col="5" row="4"/>
+  	<tile mapCode="bK" col="5" row="5"/>
+  	
+  	<tile mapCode="bl" col="0" row="4"/>
+  	<tile mapCode="bd" col="0" row="5"/>
+  	<tile mapCode="Bl" col="1" row="4"/>
+  	<tile mapCode="Bd" col="1" row="5"/>
+  </image_Strip>
+  <layer name="board">
+  	<row number="00">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="01">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="02">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="03">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="04">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="05">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="06">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="07">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+  </layer> 
+  <layer name="pieces">
+  	<row number="00">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="01">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="02">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="03">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="04">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="05">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="06">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+   	<row number="07">aa|aa|aa|aa|aa|aa|aa|aa
+   	</row>
+  </layer> 
+</map>

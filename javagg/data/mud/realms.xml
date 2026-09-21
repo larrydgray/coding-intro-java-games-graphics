@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reamls>
+	<realm world="grand_earth" name="California" id="california">
+	   <descript>
+	      California is an area where there may be many terrain types and climates in the same small
+	      area. Imagine the state of California with deserts, tropical, temporate, volcanic, swamppy, grass land, evergreen 
+	      forest, snowy all in the same small area. 
+	   </descript>
+	</realm>
+	<!--  
+	<realm>
+	</realm>
+	-->
+</reamls>

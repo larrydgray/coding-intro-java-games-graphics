@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Image Strip Properties</comment>
+<entry key="tileY">40</entry>
+<entry key="tileX">40</entry>
+<entry key="rows">6</entry>
+<entry key="cols">6</entry>
+</properties>

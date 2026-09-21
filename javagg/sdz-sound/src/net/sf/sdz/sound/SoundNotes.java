@@ -1,0 +1,101 @@
+package net.sf.sdz.sound;
+
+import javax.sound.midi.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+/**
+ * Plays random MIDI notes through the system synthesizer's default
+ * soundbank. Play plays 10 random notes of random duration; Prev/Next
+ * cycle through the 128 available instruments (shown in a label), also
+ * printing the full instrument list to the console on startup.
+ */
+public class SoundNotes {
+
+    Instrument[] instr = null;
+    Synthesizer synth = null;
+    boolean skip = false;
+    int duration = 0;
+    int note = 0;
+    int instrument = 0;
+    MidiChannel[] mc = null;
+
+    public static void main(String[] args) {
+        new SoundNotes();
+    }
+
+    public SoundNotes() {
+        try {
+            synth = MidiSystem.getSynthesizer();
+            synth.open();
+            instr = synth.getDefaultSoundbank().getInstruments();
+            for (int i = 0; i < instr.length; i++) {
+                System.out.println(instr[i]);
+            }
+        } catch (MidiUnavailableException mue) {
+            mue.printStackTrace();
+        }
+        mc = synth.getChannels();
+        JFrame frame = new JFrame("Sound1");
+        JPanel pane = new JPanel();
+        JButton playButton = new JButton("Play");
+        JButton prevButton = new JButton("Prev");
+        JButton nextButton = new JButton("Next");
+        JLabel instrumentLabel = new JLabel(instr[instrument].toString());
+        frame.getContentPane().add(pane);
+        pane.add(playButton);
+        pane.add(prevButton);
+        pane.add(nextButton);
+        pane.add(instrumentLabel);
+        frame.pack();
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.show();
+        synth.loadInstrument(instr[instrument]);
+        mc[1].programChange(instr[instrument].getPatch().getProgram());
+        playButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                play10Notes();
+            }
+        });
+        prevButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                instrument--;
+                if (instrument == -1) instrument = 127;
+                synth.loadInstrument(instr[instrument]);
+                mc[1].programChange(instr[instrument].getPatch().getProgram());
+                instrumentLabel.setText(instr[instrument].toString());
+                frame.pack();
+            }
+        });
+        nextButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                instrument++;
+                if (instrument == 128) instrument = 0;
+                synth.loadInstrument(instr[instrument]);
+                mc[1].programChange(instr[instrument].getPatch().getProgram());
+                instrumentLabel.setText(instr[instrument].toString());
+                frame.pack();
+            }
+        });
+    }
+
+    void play10Notes() {
+        for (int i = 0; i < 10; i++) {
+            note = (int) (Math.random() * 127 + 1);
+            duration = (int) (Math.random() * 100 + 1);
+            try {
+                mc[1].noteOn(note, 400);
+                Thread.sleep(duration * 10);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+        }
+        try {
+            Thread.sleep(1000);
+            mc[1].allNotesOff();
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+}

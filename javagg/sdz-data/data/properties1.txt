@@ -1,0 +1,5 @@
+birth=2/2/2018
+name=Larry the Rogue
+level=10
+wealth=15.25
+magic=false

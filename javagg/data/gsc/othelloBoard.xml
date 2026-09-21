@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map name="othello" rows="8" cols="8" >
+  <image_strip name="3games.png">
+  	<tile mapCode="gr" col="0" row="2"/>
+  	<tile mapCode="ow" col="1" row="2"/>
+  	<tile mapCode="ob" col="2" row="2"/> 	
+  </image_strip>
+  <layer name="board">
+  	<row number="00">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+   	<row number="01">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+   	<row number="02">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+   	<row number="03">gr|gr|gr|ow|ob|gr|gr|gr
+   	</row>
+   	<row number="04">gr|gr|gr|ob|ow|gr|gr|gr
+   	</row>
+   	<row number="05">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+   	<row number="06">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+   	<row number="07">gr|gr|gr|gr|gr|gr|gr|gr
+   	</row>
+  </layer> 
+</map>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/jgg-awt3d/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/jgg-bitmap-editor/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/jgg-gamescreen/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/jgg-imagetool/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/jgg-island3d/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/jgg-rpg/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-3d-swing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-3d-fx/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-data/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-sound/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-input/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-ds/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-ds/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-profiling/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sdz-sprites/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>

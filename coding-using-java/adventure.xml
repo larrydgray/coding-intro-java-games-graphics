@@ -1,0 +1,85 @@
+<world>
+<room name="The Void" id="void">
+<description>
+You are standing in a dimly lit room that fades to darkness all around. In the center of the room is what looks like
+some kind of doorway with swirling blueish light eliminating from its center outwards. As you walk around it you see it looks to
+be somewhat translucent and not solid. Your hand can pass into and through it. Since there is nothing better to do I
+recommend you enter and pass through the blue light doorway to see what happens.
+</description>
+<brief>
+You are in a dark room with a blue colored translucent swirling doorway.
+</brief>
+<door dir="enter" room="forest"/>
+</room>
+<room name="Forest" id="forest">
+<description>
+This is a fairly thick forest of mixed evergreen and green leafed trees. There are a few large moss covered rocks around.
+A very small trickling stream flows in from the north and out to the east. A game trail leads to the west and south. Also there is a blue swirling
+lighted doorway here. I think you came through this and it is what is known as a portal. But should you ever try to go back through it?
+</description>
+<brief>
+You are in a forest with a portal. There is a stream to the north and east and a trail to the west and south.
+</brief>
+<door dir="n" room=""/>
+<door dir="s" room=""/>
+<door dir="e" room=""/>
+<door dir="w" room="cliffs"/>
+<door dir="enter" room="void"/>
+</room>
+<room name="Large Cliffs" id="cliffs">
+<description>
+Trees disappear below a large cliff to the open skies to the west. A game trail emerges from thick forest to the east and seems to end but
+you can navigate to the north and south along the cliffs bare rock. There is a large branch and log laying here that you have to
+maneuver around. It overhangs the cliff a little. A blue berry bush is next to it. A blue portal is on the cliff to the north.
+</description>
+<brief>
+You are standing on a large cliff next to an overhanging log. Paths lead north and south along the cliff
+or into the woods to the east.
+</brief>
+<door dir="s" room="ridge"/>
+<door dir="enter" room="island"/>
+<door dir="e" room="forest"/>
+</room>
+<room name="Tropical Island" id="island">
+<description>
+Seagulls squawk and fly all around. Tropical palms and undergrowth are all around. In the center of this room is a blue portal.
+White fluffy clouds mixed with deep blue skies are above. A cocoanut lies on the ground here. You can make out through the trees all around
+what looks to be ocean water and waves. A rat scurries away. Paths are in all directions here.
+</description>
+<brief>
+You are in the middle of a small tropical island with a blue portal. Paths are in all directions.
+</brief>
+<door dir="n" room="beach"/>
+<door dir="s" room="beach"/>
+<door dir="e" room="beach"/>
+<door dir="w" room="beach"/>
+<door dir="enter" room="cliffs"/>
+</room>
+<room name="Island Beach" id="beach">
+<description>
+You are standing on a sand/gravel beach. Ocean is out in front of you to the horizon. Tropical forest are behind you.
+Small blue crabs are scattered all around. You see a starfish in the water. You also see sardines swimming about. A path
+enters into the tropical forest behind you towards the center of the island. You can walk to the right or left along the
+beach and around the island.
+</description>
+<brief>
+You are standing on a beach. The ocean is in front of you and palm trees behind you. You may walk to the left or right along
+the beach. A path enters the palms behind you back to the center of the island.
+</brief>
+<door dir="l" room="beach"/>
+<door dir="r" room="beach"/>
+<door dir="enter" room="island"/>
+</room>
+<room name="South End of Ridge" id="ridge">
+<description>
+This is the bottom of the downward slope at the end of a ridge. You can climb up the crest of the ridge to some cliffs above. Trees are
+sparse here. There is a stand of tall cane that is very thick and you think you hear water running on the other side to the south. There
+is a clearing to the west that looks like an open field. Woods to the east and slopes slightly upward. There is a crow in the tree above
+and you hear it 'call' occasionally. An aluminum beer can refuse bottom shines in the penetrating sunbeams.
+</description>
+<brief>
+Woods with river cane nearby. Clearing to the west. Woods to the east. Steep incline up the ridge to the north looks passable.
+</brief>
+<door dir="n" room="cliffs"/>
+</room>
+</world>

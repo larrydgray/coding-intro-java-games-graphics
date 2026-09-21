@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rooms>
+    <!-- If we are going to start
+    this game we need some rooms to
+    explore. -->
+	<room subReal="baytown" name="Boat Dock" id="boat_dock">
+	    <descript>
+	    	You find yourself standing on a wooden dock which is over a bay. You can see
+	    	a pass from the bay out to the ocean to the west. A rocky beach extends to the north and 
+	    	a sandy beach to the south. There are forest to the north east and woods to the south east. Due
+	    	east lies some small one or two story buildings. Some appear to be commercial shops and others 
+	    	possibly residences. You hear the water splashing the shore line and sea gulls calling.
+	    </descript>
+	    <weather>
+	       <descript>
+	           It is a sunny warm day. There is very little breeze.
+	       </descript>
+	    </weather>
+	    
+	    <exits>
+	      <exit command="n" room="rocky_shore">
+	        <descript>This path is very rocky, footing is not sure.
+	        </descript>
+	      </exit>
+	      <exit command="e" room="town_east">
+	        <descript>You walk down the dock and onto a path towards town.
+	        </descript>
+	      </exit>
+	      <exit comamnd="s" room="sandy_beach">
+	        <descript>The beach sand feels good under your feet.
+	        </descript>
+	      </exit>
+	      <exit command="ne" room="fir_forest">
+	        <descript>A path leads you north of the village into a darkening forest of tall firs.
+	        </descript>
+	      </exit>
+	      <exit command="se" room="shady_oaks">
+	        <descript>You enter an area south of the village of patchy and somewhat shady oak trees.
+	        </descript>
+	      </exit>
+	    </exits>
+	</room>
+	
+	<room subRealm="Baytown" name="Rocky Shore" id="rocky_shore">
+	    <descript>
+	      The bay is to the west. Waves splash hard against the rocky shore. To the north, north east and east
+	      you see dark forest of tall evergreen fir trees. To the south east you make out the roofs of a few buildings.
+	      To the south the rocks fade into sand along the shore and there appears to be a boat dock. 
+	    </descript>
+	    <exit command="s" room="boat_dock" >
+	        You walk up onto a wooden boat dock.
+	    </exit>
+	</room>
+	<room subRealm="Baytown" name="Sandy Beach" id="sandy_beach">
+	 <descript>
+	 	Here the shore is mostly sandy with a few sea shells and some refuse here and there. The waves roll gently ashore.
+	 	To the north there appears to be a boat dock. To the northeast a town, and to the south east, 
+	 	east and south shady oak wood lands.
+	    </descript>
+	    <exit command="n" room="boat_dock">
+	        You walk up to a boat dock.
+	    </exit>
+	</room>
+	<room subRealm="Baytown" name="Tall Fir Forest" id="fir_forest">
+	 <descript>
+	 	The forest is dark with tall evergreen fir trees all around you. Branches and logs lay here and there. Ferns and
+	 	mushrooms abound. To the south west the trail breaks open with sunlight into what appears to be a bay. To the north
+	 	east you see a small stream and can hear water bubbling and trickling. Birds are chirping. 
+	    </descript>
+	    <exit command="sw" room="boat_dock">
+	        You exit through a bright opening to reveal a boat dock in front of you.
+	    </exit>
+	</room>
+	<room subRealm="Baytown" name="Shady Oaks" id="shady_oaks">
+	 <descript>
+	    Shady oaks are here and there and sometimes in clumps. Small sunny glades appear here and there along the trail.
+	    An occasional bird chirps. Insects buzz about. To the northeast you see a bay and boat dock. To the east a sandy
+	    beach. 
+	    </descript>
+	    <exit command="nw" room="boat_dock">
+	        Following a trail leads you under a branch and to a boat dock.
+	    </exit>
+	</room>
+	<room subRealm="Baytown" name="East End of Town" id="town_east">
+	 <descript>
+	    This appears to be a commercial section of a fishing town with a few shops. A building to the north has
+	    two stories and is sided with brick. The building to the south is one story and extends down the block with several shops in it. The
+	    road is paved with bricks. On the north building you see a sign which says Baytown Inn. The shop to the south
+	    says Fishing and Hunting supplies. The street continues to the east. 
+	    </descript>
+	    <exit command="w" room="boat_dock">
+	        Following the brick road to the west leads you to a boat dock.
+	    </exit>
+	</room>
+	
+</rooms>

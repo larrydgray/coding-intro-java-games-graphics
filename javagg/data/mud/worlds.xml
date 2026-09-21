@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<worlds>
+	<world name="Grand Earth" id="grand_earth">
+	    <descript>
+	    Grand Earth is world where a man may starve, over heat, freeze, die of thirst, and must rest from
+	    time to time. Grand Earth has weather and time. Grand earth will have different areas of 
+	    forest, mountains, deserts, hills, islands, tropics, swamps, oceans, snowy tundra and icelands. In
+	    Grand Earth you may become fatigued both mentally and physically. You may be out of breath and drown
+	    or die. You have a given amount of physical injury or health. You may not see in the dark under
+	    normal circumstances without lighting. Enjoy your stay in the world of Grand Earth. 
+	    </descript>
+	    <!-- 
+	    <exits>
+	       Exits are portals from one world to another world.
+	           They may also be portals from worlds to expanses to universes.
+	       
+	      <exit>
+	       This might be an exit into an expanse for outer space or the solar system. 
+	           This may also be exit into a different future or past time, which would be
+	           and alternate world.
+	      
+	      
+	        
+	      </exit>
+	    </exits>
+	    -->
+	</world>
+</worlds>

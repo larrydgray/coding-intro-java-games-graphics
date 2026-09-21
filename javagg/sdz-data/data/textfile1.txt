@@ -1,0 +1,3 @@
+10/2/18|Coke Vending|1.75|100|true
+10/3/18|Steak Meal|17.52|102|false
+10/4/18|Gas for Van|54.13|508|true
