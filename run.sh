@@ -7,7 +7,15 @@
 #    ./run.sh clean
 # ─────────────────────────────────────────────
 
-export DISPLAY=":1"
+# -- Portability: Linux, macOS-like shells, and Git Bash on Windows ----------
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*) PATHSEP=";"; winpath() { cygpath -m "$1"; } ;;
+  *)                    PATHSEP=":"; winpath() { printf '%s' "$1"; } ;;
+esac
+# Write one quoted, Windows-safe path per line (for javac @argfiles)
+write_list() { while IFS= read -r f; do printf '"%s"\n' "$(winpath "$f")"; done; }
+# Only point at a Replit display when one exists
+if [[ -S /tmp/.X11-unix/X1 ]]; then export DISPLAY=":1"; fi
 export JAVA_TOOL_OPTIONS="-Dawt.useSystemAAFontSettings=off -Dswing.aatext=false"
 
 # ── Paths ────────────────────────────────────
@@ -102,15 +110,15 @@ build_app() {
   fi
 
   # Build classpath
-  local cp="$out_dir"
+  local cp="$(winpath "$out_dir")"
   if [[ -n "${DEPS[$app]}" ]]; then
     for dep in ${DEPS[$app]}; do
-      cp="$cp:$OUT/$dep"
+      cp="$cp${PATHSEP}$(winpath "$OUT/$dep")"
     done
   fi
   if [[ "${NEEDS_LIB[$app]}" == "yes" && -d "$LIB" ]]; then
     for jar in "$LIB"/*.jar; do
-      cp="$cp:$jar"
+      cp="$cp${PATHSEP}$(winpath "$jar")"
     done
   fi
 
@@ -119,16 +127,16 @@ build_app() {
   echo "  Output: $out_dir"
 
   # Find all .java files
-  find "$src_dir" -name "*.java" > /tmp/javagg_sources.txt
+  LIST="$(mktemp)"; find "$src_dir" -name "*.java" | write_list > "$LIST"
   local count
-  count=$(wc -l < /tmp/javagg_sources.txt)
+  count=$(wc -l < "$LIST")
   echo "  Files:  $count .java files found"
 
   # Compile the optional font preloader when a source tree provides one.
   if [[ -f "$ROOT/FontPreloader.java" ]]; then
     javac -d "$out_dir" "$ROOT/FontPreloader.java" 2>/dev/null
   fi
-  javac -d "$out_dir" -cp "$cp" @/tmp/javagg_sources.txt 2>&1
+  javac -d "$(winpath "$out_dir")" -cp "$cp" @"$(winpath "$LIST")" 2>&1
   if [[ $? -eq 0 ]]; then
     echo "✓ Compiled successfully → $out_dir"
 
@@ -160,26 +168,26 @@ run_app() {
   fi
 
   # Build classpath
-  local cp="$out_dir"
+  local cp="$(winpath "$out_dir")"
   if [[ -n "${DEPS[$app]}" ]]; then
     for dep in ${DEPS[$app]}; do
-      cp="$cp:$OUT/$dep"
+      cp="$cp${PATHSEP}$(winpath "$OUT/$dep")"
     done
   fi
   if [[ "${NEEDS_LIB[$app]}" == "yes" && -d "$LIB" ]]; then
     for jar in "$LIB"/*.jar; do
-      cp="$cp:$jar"
+      cp="$cp${PATHSEP}$(winpath "$jar")"
     done
   fi
 
   # Also add root data/images dirs to classpath for resource loading
-  cp="$cp:$ROOT"
+  cp="$cp${PATHSEP}$(winpath "$ROOT")"
 
   echo "► Running ${MAIN[$app]} ..."
   local -a java_opts
-  java_opts=(-Dsun.java2d.fontpath=/usr/share/fonts/truetype/dejavu
-            -Djavagg.root="$ROOT")
-  if [[ -f "$FONT_CONFIG" ]]; then
+  java_opts=(-Djavagg.root="$(winpath "$ROOT")")
+  [[ -d /usr/share/fonts/truetype/dejavu ]] && java_opts+=(-Dsun.java2d.fontpath=/usr/share/fonts/truetype/dejavu)
+  if [[ "$(uname -s)" == Linux && -f "$FONT_CONFIG" ]]; then
     java_opts+=("-Dsun.awt.fontconfig=$FONT_CONFIG")
   fi
 

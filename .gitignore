@@ -8,3 +8,8 @@ zulu*/
 node_modules/
 .DS_Store
 .idea/
+
+# Files the database and file examples create when run
+javagg/sdz-data/data/*.db
+javagg/sdz-data/data/*.mv.db
+javagg/sdz-data/data/array.txt

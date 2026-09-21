@@ -1,0 +1,4 @@
+# Shell scripts must keep Linux line endings, even when cloned on Windows,
+# or Git Bash will fail with strange "\r" errors.
+*.sh text eol=lf
+*.jar binary

@@ -1,0 +1,25 @@
+Third-party software included in this repository
+================================================
+
+The following libraries are included unmodified in javagg/lib/ so the database
+and XML examples run without a separate download. Each is the property of its
+authors and is used under its own license. Please check each project's site for
+the current license text.
+
+H2 Database Engine 2.5.250
+  javagg/lib/h2-2.5.250.jar
+  License: Mozilla Public License 2.0 or Eclipse Public License 1.0 (dual)
+  https://h2database.com
+
+SQLite JDBC Driver 3.53.4.0 (Xerial)
+  javagg/lib/sqlite-jdbc-3.53.4.0.jar
+  License: Apache License 2.0 (SQLite itself is in the public domain)
+  https://github.com/xerial/sqlite-jdbc
+
+JDOM 2.0.6.1
+  javagg/lib/jdom-2.0.6.1.jar
+  License: JDOM license (Apache-style)
+  http://www.jdom.org
+
+The example programs and scripts in this repository are licensed as described
+in README.md.

@@ -8,7 +8,15 @@
 #  Run from anywhere; lives in examples/javagg next to the sdz-* modules.
 # ─────────────────────────────────────────────
 
-export DISPLAY="${DISPLAY:-:1}"
+# -- Portability: Linux, macOS-like shells, and Git Bash on Windows ----------
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*) PATHSEP=";"; winpath() { cygpath -m "$1"; } ;;
+  *)                    PATHSEP=":"; winpath() { printf '%s' "$1"; } ;;
+esac
+# Write one quoted, Windows-safe path per line (for javac @argfiles)
+write_list() { while IFS= read -r f; do printf '"%s"\n' "$(winpath "$f")"; done; }
+# Only point at a Replit display when one exists
+if [[ -S /tmp/.X11-unix/X1 ]]; then export DISPLAY=":1"; fi
 
 # ── Paths ────────────────────────────────────
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -102,9 +110,9 @@ require_app() {
 
 # Classpath: module output + any jars in lib/
 classpath() {
-  local cp="$OUT/$1" jar
+  local cp="$(winpath "$OUT/$1")" jar
   for jar in "$LIB"/*.jar; do
-    [[ -f "$jar" ]] && cp="$cp:$jar"
+    [[ -f "$jar" ]] && cp="$cp${PATHSEP}$(winpath "$jar")"
   done
   echo "$cp"
 }
@@ -133,11 +141,11 @@ build_module() {
 
   local list
   list="$(mktemp)"
-  find "$src_dir" -name "*.java" > "$list"
+  find "$src_dir" -name "*.java" | write_list > "$list"
 
   echo "► Compiling $mod ($(wc -l < "$list") files) → $out_dir"
   # shellcheck disable=SC2046
-  if javac -nowarn -d "$out_dir" -cp "$(classpath "$mod")" $( [[ "$fx" == yes ]] && fx_args ) @"$list"; then
+  if javac -nowarn -d "$(winpath "$out_dir")" -cp "$(classpath "$mod")" $( [[ "$fx" == yes ]] && fx_args ) @"$(winpath "$list")"; then
     # Copy non-java resources (fxml, images, ...) next to the classes
     (cd "$src_dir" && find . -type f -not -name "*.java" -not -name "*.class" -not -name "*.md" \
        -exec cp --parents {} "$out_dir" \;)

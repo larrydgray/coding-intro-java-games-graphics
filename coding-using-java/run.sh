@@ -11,7 +11,15 @@
 
 set -u
 
-export DISPLAY=":1"
+# -- Portability: Linux, macOS-like shells, and Git Bash on Windows ----------
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*) PATHSEP=";"; winpath() { cygpath -m "$1"; } ;;
+  *)                    PATHSEP=":"; winpath() { printf '%s' "$1"; } ;;
+esac
+# Write one quoted, Windows-safe path per line (for javac @argfiles)
+write_list() { while IFS= read -r f; do printf '"%s"\n' "$(winpath "$f")"; done; }
+# Only point at a Replit display when one exists
+if [[ -S /tmp/.X11-unix/X1 ]]; then export DISPLAY=":1"; fi
 export JAVA_TOOL_OPTIONS="-Dawt.useSystemAAFontSettings=off -Dswing.aatext=false"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -55,8 +63,9 @@ run_game() {
 
   echo "► Running $game ..."
   cd "$SCRIPT_DIR"
-  java -Dsun.java2d.fontpath=/usr/share/fonts/truetype/dejavu \
-       -cp "$OUT_DIR" "$game"
+  local -a font_opts=()
+  [[ -d /usr/share/fonts/truetype/dejavu ]] && font_opts+=(-Dsun.java2d.fontpath=/usr/share/fonts/truetype/dejavu)
+  java ${font_opts[@]+"${font_opts[@]}"} -cp "$(winpath "$OUT_DIR")" "$game"
 }
 
 clean_all() {

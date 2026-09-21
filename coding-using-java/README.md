@@ -1,6 +1,6 @@
 # Coding Using Java — Example Games
 
-Fourteen simple games built on a small shared engine (`GameScreen`,
+Thirteen simple games built on a small shared engine (`GameScreen`,
 `ScreenBuffer`, `Cell`, `FontType`, `MiniGraphics`, `InputHandler`), adapted
 from the `javagg` (Java Games and Graphics) project.
 
@@ -135,5 +135,5 @@ reusable engine — you shouldn't need to edit them to build a new game.
 ## License
 
 See [LICENSE](LICENSE). These examples are for enrolled students' personal
-educational use within their own Replit project — see the license for what
-that does and doesn't cover.
+educational use, on their own computer or within their own Replit project — see
+the license for what that does and doesn't cover.
