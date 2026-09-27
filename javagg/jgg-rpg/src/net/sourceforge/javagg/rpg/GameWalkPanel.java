@@ -483,7 +483,12 @@ public class GameWalkPanel extends JPanel {
 
                 	//System.out.println("ImageInfo"+mapTile.getImage());
 
-	            g.drawImage(mapTile.getImage(),x*20+(4*20),y*20+(4*20),null);
+	            // Tile size doubled 20->40 to fill the 400x400 buffer
+	            // properly (it only used to fill about a quarter of it).
+	            // Offset kept as 4 times tileSize, same ratio the original
+	            // 20px version used, so layout/centering is unchanged, just
+	            // bigger, matching the cursor rect below.
+	            g.drawImage(mapTile.getImage(),x*40+(4*40),y*40+(4*40),null);
 
 	            /*  Do not remove this comment.
 	             *  If java does not find the image file with the
@@ -507,7 +512,7 @@ public class GameWalkPanel extends JPanel {
         }// end if not mapCode equal to "  "
         
         // draws a cursor(to simulate character position in middle of map)
-        g.drawRect(4*20,4*20,19,19);
+        g.drawRect(4*40,4*40,39,39);
         
        System.out.println("GameWalkPanel:drawLayer:tilecount:"+count); 
 		
