@@ -27,29 +27,33 @@ import javax.swing.JScrollPane;
 
 import net.sf.javagg.bitmapedit.BitmapEditor;
 /**
- * Editor which displays the image strip as a 
+ * Editor which displays the image strip as a
  * single row or grid of images.
  * Allows for editing of individual images from the strip.
  * Saves and loads image strips.
- * 
+ *
  * @author Larry Gray(caverdude)
  *
  */
 public class ImageStripEditor extends JFrame {
 	/** */
 	public BitmapEditor aBitmapEditor = null;
-	
+
 	/**
 	 * This is used on two occasions. One is
 	 * when a new image strip is begun.
 	 * The other is when an image strip is loaded from
-	 * storage. 
-	 * @param x
-	 * @param y
-	 * @param cols
-	 * @param rows
+	 * storage. It resizes the frame, the scrollable image
+	 * area, and the bitmap editor to match, then repaints.
+	 * Uses pack() rather than a hand-computed frame size so the
+	 * menu bar and the control rows above the image always have
+	 * room, no matter how large or small the strip is.
+	 * @param x tile width in pixels
+	 * @param y tile height in pixels
+	 * @param cols number of columns in the strip
+	 * @param rows number of rows in the strip
 	 */
-	
+
 	private void setupUI(int x, int y, int cols, int rows){
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -57,39 +61,50 @@ public class ImageStripEditor extends JFrame {
 		Dimension scrnsize = toolkit.getScreenSize();
 	    int screenWidth=scrnsize.width;
 	    int screenHeight=scrnsize.height;
-		/*BitmapEditor.editorPanel = aBitmapEditor.createEditor(x,
-				y);
-		aBitmapEditor.jf.getContentPane().removeAll();
-		aBitmapEditor.jf.getContentPane()
-				.add(BitmapEditor.editorPanel);
-		aBitmapEditor.jf.getContentPane().validate();
-		aBitmapEditor.jf.getContentPane().repaint();*/
 		aBitmapEditor.makeNew(x,y);
-		int frameX=cols*x;
-		int frameY=rows*y;
-		if(frameX>(screenWidth-50))frameX=screenWidth-50;
-		if(frameY>(screenHeight-50))frameX=screenHeight-50;
-		setSize(new Dimension(frameX, frameY));
-		imagePanel
-				.setPreferredSize(new Dimension(cols*x, rows*y));
-		scrollPane.setSize(cols*x, rows*y);
+		// Leave room on screen for the menu bar and the control rows above
+		// the image, and let the scroll pane show scrollbars instead of
+		// growing the window past the screen for a large strip.
+		int viewWidth = Math.min(cols * x, screenWidth - 100);
+		int viewHeight = Math.min(rows * y, screenHeight - 150);
+		imagePanel.setPreferredSize(new Dimension(cols * x, rows * y));
+		scrollPane.setPreferredSize(new Dimension(viewWidth, viewHeight));
+		pack();
 		imagePanel.repaint();
-		
+
 	}
-	
+
+	/**
+	 * Rebuilds the image strip using the current column/row count and
+	 * tile size (the x, y, tileX, tileY fields), as a fresh blank strip,
+	 * then resizes the UI to match. Shared by "New" and by the Options
+	 * menu items, so changing either setting actually takes effect
+	 * immediately instead of only updating the label text.
+	 */
+	private void rebuildStrip() {
+		imageStrip.cols = x;
+		imageStrip.rows = y;
+		imageStrip.tileSize = new Dimension(tileX, tileY);
+		BufferedImage aBufferedImage = new BufferedImage(tileX * x,
+				tileY * y, BufferedImage.TYPE_INT_RGB);
+		imageStrip.anImage = aBufferedImage;
+		setupUI(imageStrip.tileSize.width, imageStrip.tileSize.height,
+				imageStrip.cols, imageStrip.rows);
+	}
+
     /**
      * Shows which image tile the mouse
      * is currently hovering over. If an
      * image is left clicked the image in the editor is transfered to
      * the tile in the image strip which was clicked. If an image is
      * right clicked then the image is loaded into the editor for
-     * editing. 
-     * 
+     * editing.
+     *
      * @author Larry Gray (caverdude)
      *
      *
      */
-	
+
 	public class SelectionLabels extends JPanel {
 		/** */
 		private JLabel col = new JLabel("Column:");
@@ -98,7 +113,7 @@ public class ImageStripEditor extends JFrame {
 		/** */
 		private JLabel number = new JLabel("Number:");
         /**
-         * 
+         *
          * @param col
          * @param row
          * @param number
@@ -109,7 +124,7 @@ public class ImageStripEditor extends JFrame {
 			this.number.setText("Number:" + number);
 		}
         /**
-         * 
+         *
          */
 		public SelectionLabels() {
 			this.setLayout(new FlowLayout());
@@ -119,11 +134,11 @@ public class ImageStripEditor extends JFrame {
 
 		} // constructor SelectionLabels()
 	} // inner class SelectionLabels
-    
+
 	/**
 	 * This panel shows the size of the image strip in rows and columns. It
 	 * also shows the tile size in pixels for image tiles.
-	 * 
+	 *
 	 * @author Larry Gray(caverdude)
 	 *
 	 */
@@ -137,7 +152,7 @@ public class ImageStripEditor extends JFrame {
 		/** */
 		private JLabel cols = new JLabel("Columns:");
         /**
-         * 
+         *
          * @param tileX
          * @param tileY
          * @param rows
@@ -150,7 +165,7 @@ public class ImageStripEditor extends JFrame {
 			this.cols.setText("Columns:" + cols);
 		}
         /**
-         * 
+         *
          */
 		public SizeLabels() {
 			this.setLayout(new FlowLayout());
@@ -161,10 +176,10 @@ public class ImageStripEditor extends JFrame {
 
 		} // constructor SizeLabels()
 	} // inner class SizeLabels
-	
+
     /**
      * Displays the image strip and an optional grid.
-     * 
+     *
      * @author Larry Gray(caverdude)
      *
      */
@@ -172,7 +187,7 @@ public class ImageStripEditor extends JFrame {
 		/** */
 		private ImageStrip imageStrip;
         /**
-         * 
+         *
          * @param anImageStrip
          */
 		public void setImageStrip(ImageStrip anImageStrip) {
@@ -181,11 +196,11 @@ public class ImageStripEditor extends JFrame {
         /** */
 		public boolean showGrid = true;
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
         /**
-         * 
+         *
          */
 		public void paintComponent(Graphics g) {
 
@@ -215,19 +230,19 @@ public class ImageStripEditor extends JFrame {
 	SizeLabels sizeLabels = new SizeLabels();
 	/** */
 	private String defaultDir = "";
-	/** */
-	private int x = 16;
-	/** */
-	private int y = 16;
-	/** */
-	private int tileX = 8;
-	/** */
-	private int tileY = 8;
-	
+	/** Default number of columns (across) in a new image strip. */
+	private int x = 5;
+	/** Default number of rows (down) in a new image strip. */
+	private int y = 3;
+	/** Default tile width in pixels. */
+	private int tileX = 50;
+	/** Default tile height in pixels. */
+	private int tileY = 50;
+
     /**
      * A very long constructor which we need to reduce in size somehow.
      * This mainly sets up the entire UI and contains controller source.
-     * 
+     *
      */
 	public ImageStripEditor() {
 		JMenu fileMenu = new JMenu("File");
@@ -266,7 +281,7 @@ public class ImageStripEditor extends JFrame {
 				tileX=imageStrip.tileSize.width;
 				tileY=imageStrip.tileSize.height;
 				sizeLabels.setSize(tileX, tileY, x, y);
-				
+
 			} // actionPerformed
 		});// ActionListener, addActionListener
 		save.addActionListener(new ActionListener() {
@@ -281,56 +296,46 @@ public class ImageStripEditor extends JFrame {
 						"Tile Horizontal Size?");
 				String sy = JOptionPane.showInputDialog(null,
 						"Tile Vertical Size?");
-				tileX = 0;
-				tileY = 0;
 				try {
 				    tileX = Integer.parseInt(sx);
 					tileY = Integer.parseInt(sy);
 				} catch (NumberFormatException nfe) {
 					nfe.printStackTrace();
+					return;
 				} // catch
 				sizeLabels.setSize(tileX, tileY, x, y);
+				rebuildStrip();
 			} // actionPerformed
 		});// ActionListener, addActionListener
 		newImageStrip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				imageStrip.cols = x;
-				imageStrip.rows = y;
-				imageStrip.tileSize = new Dimension(tileX, tileY);
-				BufferedImage aBufferedImage = new BufferedImage(tileX * x,
-						tileY * y, BufferedImage.TYPE_INT_RGB);
-				imageStrip.anImage = aBufferedImage;
-				setupUI(imageStrip.tileSize.width,imageStrip.tileSize.height,imageStrip.cols,imageStrip.rows);
-				
-
+				rebuildStrip();
 			} // actionPerformed
 		});// ActionListener, addActionListener
 		imageSize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				String sx = JOptionPane.showInputDialog(null, "Columns?");
 				String sy = JOptionPane.showInputDialog(null, "Rows?");
-				x = 0;
-				y = 0;
 				try {
 					x = Integer.parseInt(sx);
 					y = Integer.parseInt(sy);
 				} catch (NumberFormatException nfe) {
 					nfe.printStackTrace();
+					return;
 				} // catch
 				sizeLabels.setSize(tileX, tileY, x, y);
+				rebuildStrip();
 			} // actionPerformed
 		}); // ActionListener, addActionListener
 
 		((ImagePanel) imagePanel).setImageStrip(imageStrip);
-		imageStrip.cols = 16;
-		imageStrip.rows = 16;
-		imageStrip.tileSize = new Dimension(8, 8);
-		BufferedImage aBufferedImage = new BufferedImage(8 * 16, 8 * 16,
+		imageStrip.cols = x;
+		imageStrip.rows = y;
+		imageStrip.tileSize = new Dimension(tileX, tileY);
+		BufferedImage aBufferedImage = new BufferedImage(tileX * x, tileY * y,
 				BufferedImage.TYPE_INT_RGB);
 		imageStrip.anImage = aBufferedImage;
-		this.setSize(new Dimension(5 * 40, 5 * 40));
-		imagePanel.setPreferredSize(new Dimension(16 * 8, 16 * 8));
-		scrollPane.setSize(50, 50);
+		aBitmapEditor = new BitmapEditor(tileX, tileY);
 		JPanel upperPanel = new JPanel();
 		JButton gridButton = new JButton("Grid ON/OFF");
 		gridButton.addActionListener(new ActionListener() {
@@ -344,12 +349,13 @@ public class ImageStripEditor extends JFrame {
 		});// ActionListener, addActionListener
 		upperPanel.setLayout(new GridLayout(3, 0));
 		upperPanel.add(this.selectionLabels);
-		this.sizeLabels.setSize(8, 8, 16, 16);
+		this.sizeLabels.setSize(tileX, tileY, x, y);
 		upperPanel.add(this.sizeLabels);
 		upperPanel.add(gridButton);
 		this.add(upperPanel, BorderLayout.NORTH);
 		this.add(this.scrollPane, BorderLayout.SOUTH);
 		this.setTitle("Image Strip Editor");
+		setupUI(tileX, tileY, x, y);
 		this.setVisible(true);
 		imagePanel.addMouseMotionListener(new MouseMotionListener() {
 
@@ -364,7 +370,7 @@ public class ImageStripEditor extends JFrame {
 
 				int col = me.getX() / tileX;
 				int row = me.getY() / tileY;
-				int number = col + y * row;
+				int number = col + x * row;
 				selectionLabels.setPos(col, row, number);
 			}
 
@@ -387,7 +393,6 @@ public class ImageStripEditor extends JFrame {
 
 			} // method mouseClicked
 		}); // mouse listener
-		aBitmapEditor = new BitmapEditor(8, 8);
 		imageStrip.setFrameComponent(this);
 	} // constructor ImageSelector()
 
