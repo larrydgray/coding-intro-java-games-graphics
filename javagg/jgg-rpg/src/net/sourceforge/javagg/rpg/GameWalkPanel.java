@@ -488,7 +488,7 @@ public class GameWalkPanel extends JPanel {
 	            // Offset kept as 4 times tileSize, same ratio the original
 	            // 20px version used, so layout/centering is unchanged, just
 	            // bigger, matching the cursor rect below.
-	            g.drawImage(mapTile.getImage(),x*40+(4*40),y*40+(4*40),null);
+	            g.drawImage(mapTile.getImage(),x*40+(4*40),y*40+(4*40),40,40,null);
 
 	            /*  Do not remove this comment.
 	             *  If java does not find the image file with the
@@ -512,7 +512,7 @@ public class GameWalkPanel extends JPanel {
         }// end if not mapCode equal to "  "
         
         // draws a cursor(to simulate character position in middle of map)
-        g.drawRect(4*40,4*40,39,39);
+        g.drawRect(4*40,4*40,19,19);
         
        System.out.println("GameWalkPanel:drawLayer:tilecount:"+count); 
 		
