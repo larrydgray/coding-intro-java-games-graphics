@@ -222,10 +222,10 @@ public class GameWalkPanel extends JPanel {
 	 */
 	public Dimension getPreferredSize(){
 
-		// Was 200,200 - stale relative to the 400x400 image this panel
-		// actually paints even before doubling it for modern screens; see
-		// the matching scale-up in paintComponent below.
-	 	return new Dimension(800,800);
+		// This map was drawn for late-90s/early-2000s screen resolutions.
+		// Tiles are 40x40 (double their native 20x20) and 14x14 of them are
+		// shown at once, so this must match the 560x560 the panel now paints.
+	 	return new Dimension(560,560);
 
 	}
 
@@ -297,7 +297,7 @@ public class GameWalkPanel extends JPanel {
      */
     public void paintComponent(Graphics g){
         
-        BufferedImage bi = new BufferedImage(400,400,1);
+        BufferedImage bi = new BufferedImage(560,560,1);
 		
 		Graphics g2 = bi.getGraphics();
         
@@ -333,10 +333,10 @@ public class GameWalkPanel extends JPanel {
     	
     	//System.out.println("Number of layers:"+layerCount);
 		
-		// Doubled from the original 400x400 (this map was drawn for late-90s/
-        // early-2000s screen resolutions). SCALE_REPLICATE keeps the tile art
-        // crisp/blocky on upscale instead of blurring it.
-        g.drawImage(bi.getScaledInstance(800,800,Image.SCALE_REPLICATE),0,0,null);
+		// Tiles are already drawn at their intended 40x40 on-screen size
+        // (see drawLayer below), so this just matches the buffer 1:1 -
+        // no further scaling needed.
+        g.drawImage(bi.getScaledInstance(560,560,Image.SCALE_REPLICATE),0,0,null);
 
  		try{
 	       	Thread.currentThread().sleep(50);
@@ -444,13 +444,13 @@ public class GameWalkPanel extends JPanel {
         
         ListIterator mapIterator = tileMap.listIterator();
         	
-        	int x1=(int)position.getX()-5;
+        	int x1=(int)position.getX()-7;
 			
-			int x2=(int)position.getX()+5;
+			int x2=(int)position.getX()+7;
 			
-			int y1=(int)position.getY()-5;
+			int y1=(int)position.getY()-7;
 			
-			int y2=(int)position.getY()+5;
+			int y2=(int)position.getY()+7;
 			
         
         
@@ -483,12 +483,10 @@ public class GameWalkPanel extends JPanel {
 
                 	//System.out.println("ImageInfo"+mapTile.getImage());
 
-	            // Tile size doubled 20->40 to fill the 400x400 buffer
-	            // properly (it only used to fill about a quarter of it).
-	            // Offset kept as 4 times tileSize, same ratio the original
-	            // 20px version used, so layout/centering is unchanged, just
-	            // bigger, matching the cursor rect below.
-	            g.drawImage(mapTile.getImage(),x*40+(4*40),y*40+(4*40),40,40,null);
+	            // Tiles are 40x40 (double their native 20x20 image size), and
+	            // the view shows 14x14 of them (position +/-7). Offset of
+	            // 6*tileSize centers that 14-wide view in the 560x560 buffer.
+	            g.drawImage(mapTile.getImage(),x*40+(6*40),y*40+(6*40),40,40,null);
 
 	            /*  Do not remove this comment.
 	             *  If java does not find the image file with the
@@ -512,7 +510,7 @@ public class GameWalkPanel extends JPanel {
         }// end if not mapCode equal to "  "
         
         // draws a cursor(to simulate character position in middle of map)
-        g.drawRect(4*40,4*40,19,19);
+        g.drawRect(6*40,6*40,19,19);
         
        System.out.println("GameWalkPanel:drawLayer:tilecount:"+count); 
 		
