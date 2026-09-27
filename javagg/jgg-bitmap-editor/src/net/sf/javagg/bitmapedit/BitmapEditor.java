@@ -129,7 +129,8 @@ public class BitmapEditor extends JComponent implements MouseListener,
 	 */
 	public BitmapEditor(int width, int height) {
 		super();
-		ImageIcon anImage = new ImageIcon("c:/dev/java/javagg/images/underlay/"+underlayImageFileName);
+		String javaggRoot = System.getProperty("javagg.root", ".");
+		ImageIcon anImage = new ImageIcon(javaggRoot + "/images/underlay/" + underlayImageFileName);
 		
 		bottomImage = convertImageIcon(anImage);
 		this.width = width;
