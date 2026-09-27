@@ -19,8 +19,10 @@ import javax.swing.JViewport;
  */
 
 public class SurfaceControlPanel extends JPanel {
-	/** The frame which controls the generation of the map elevation data. */
-	private MapFrame mapFrame;
+	/** The map view this panel reads elevation data from. Wired via
+	 * setMapPanel(), the same pattern OptionsControlPanel uses, so this
+	 * shows the SAME map the user generated in the Map Generator tab. */
+	private MapPanel mapPanel;
 
 	/** Elevation data associated with map. */
 	private MeshSurfaceModel meshSurfaceModel;
@@ -34,17 +36,12 @@ public class SurfaceControlPanel extends JPanel {
 	 */
 	public SurfaceControlPanel() {
 		meshSurfacePanel.setMeshSurfaceModel(new MeshSurfaceModel());
-		
-		 
-		mapFrame = new MapFrame();
-		//mapFrame.setSize(new Dimension(400,400));
-		//mapFrame.validate();
 		this.setLayout(new BorderLayout());
 		JButton drawButton = new JButton("Draw 3D Surface");
 		drawButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				meshSurfaceModel = new MeshSurfaceModel();
-				meshSurfaceModel.setElevationData(mapFrame.getMap());
+				meshSurfaceModel.setElevationData(mapPanel.getMap());
 				//meshSurfacePanel.setGridSize(5);
 				meshSurfacePanel.setNumberSquares(49);
 				meshSurfacePanel.setMeshSurfaceModel(meshSurfaceModel);
@@ -75,4 +72,17 @@ public class SurfaceControlPanel extends JPanel {
 		jScrollPane.setViewport(jViewport);
 		this.add(jScrollPane, BorderLayout.CENTER);
 	} // SurfaceControlPanel constructor
+
+	/**
+	 * @return Returns the mapPanel.
+	 */
+	public MapPanel getMapPanel() {
+		return mapPanel;
+	}
+	/**
+	 * @param mapPanel The mapPanel to set.
+	 */
+	public void setMapPanel(MapPanel mapPanel) {
+		this.mapPanel = mapPanel;
+	}
 } // SurfaceControlPanel class

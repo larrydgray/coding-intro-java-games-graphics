@@ -36,18 +36,18 @@ public class MapFrame extends JFrame {
 	 */
 
 	public MapFrame() {
-//		this.addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
-//			}//windowClosing
-//		});//windowAdapter addWindowListener
-//
-//		//ConsoleWindow.init();
-//
-//		this.getContentPane().add(mapControlPanel);
-//		this.setVisible(true);
-//		this.setSize(new Dimension(400, 400));
-//		this.validate();
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}//windowClosing
+		});//windowAdapter addWindowListener
+
+		//ConsoleWindow.init();
+
+		this.getContentPane().add(mapControlPanel);
+		this.setVisible(true);
+		this.setSize(new Dimension(400, 400));
+		this.validate();
 
 	} //end constructor MapFrame
 

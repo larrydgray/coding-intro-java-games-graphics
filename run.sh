@@ -50,7 +50,7 @@ NEEDS_LIB[imagetool]="no"
 DEPS[imagetool]="bitmap"
 
 SRC[island3d]="jgg-island3d/src"
-MAIN[island3d]="net.sf.javagg.island3d.MapFrame"
+MAIN[island3d]="net.sf.javagg.island3d.MeshSurface3D"
 NEEDS_LIB[island3d]="no"
 
 SRC[rpg]="jgg-rpg/src"

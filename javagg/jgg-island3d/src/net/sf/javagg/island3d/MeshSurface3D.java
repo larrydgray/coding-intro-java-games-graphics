@@ -60,6 +60,7 @@ public class MeshSurface3D extends JFrame {
 		MapControlPanel mapControlPanel = new MapControlPanel();
 		OptionsControlPanel optionsControlPanel = new OptionsControlPanel();
 		optionsControlPanel.setMapPanel(mapControlPanel.getMapPanel());
+		surfaceControlPanel.setMapPanel(mapControlPanel.getMapPanel());
 		ColorPropertiesControlPanel colorPropertiesControlPanel = new ColorPropertiesControlPanel();
 		//MapColorModel aMapColorModel = mapControlPanel.getMapPanel()
 		//colorPropertiesControlPanel.setAMapColorModel()
