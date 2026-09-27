@@ -222,7 +222,10 @@ public class GameWalkPanel extends JPanel {
 	 */
 	public Dimension getPreferredSize(){
 
-	 	return new Dimension(200,200);
+		// Was 200,200 - stale relative to the 400x400 image this panel
+		// actually paints even before doubling it for modern screens; see
+		// the matching scale-up in paintComponent below.
+	 	return new Dimension(800,800);
 
 	}
 
@@ -330,7 +333,10 @@ public class GameWalkPanel extends JPanel {
     	
     	//System.out.println("Number of layers:"+layerCount);
 		
-		g.drawImage(bi.getScaledInstance(400,400,Image.SCALE_REPLICATE),0,0,null);
+		// Doubled from the original 400x400 (this map was drawn for late-90s/
+        // early-2000s screen resolutions). SCALE_REPLICATE keeps the tile art
+        // crisp/blocky on upscale instead of blurring it.
+        g.drawImage(bi.getScaledInstance(800,800,Image.SCALE_REPLICATE),0,0,null);
 
  		try{
 	       	Thread.currentThread().sleep(50);

@@ -190,22 +190,22 @@ public class CommandPanel extends JPanel {
 	    			if (mapCycle==1){
 	    				Map map=new Map(new Dungeon1Map(universe),0,0,10,10);
 	    		   		gameWalkPanel.changeMap(2,map,new Point(0,5));
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapCycle==2){
 	    		    	Map map=new Map(new Cave1Map(universe),0,0,10,10);
 	    		   		gameWalkPanel.changeMap(3,map,new Point(4,0));
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapCycle==3){
 	    		    	Map map=new Map(new Mine1Map(universe),0,0,10,10);
 	    		   		gameWalkPanel.changeMap(4,map,new Point(0,1));
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapCycle==4){
 	    		    	Map map=new Map(new World1Map(universe),0,0,10,10);
 	    		   		gameWalkPanel.changeMap(1,map,new Point(2,2));
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    try{
 	    		    	Thread.currentThread().sleep(200);
@@ -499,28 +499,28 @@ public class CommandPanel extends JPanel {
 	                if (mapType==2){
 	    				map=MapWalkerUI.universe.maps.getMap("Dungeon1");
 	    		   		gameWalkPanel.changeMap(2,map,enterEntrance.location);
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapType==3){
 	    		    	map=MapWalkerUI.universe.maps.getMap("Cave1");
 	    		   		gameWalkPanel.changeMap(3,map,enterEntrance.location);
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapType==4){
 	    		    	map=MapWalkerUI.universe.maps.getMap("Mine1");
 	    		   		gameWalkPanel.changeMap(4,map,enterEntrance.location);
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	    		    if (mapType==1){
 	    		    	map=MapWalkerUI.universe.maps.getMap("World1");
 	    		   		gameWalkPanel.changeMap(1,map,enterEntrance.location);
-	    		   		gameWalkPanel.paintImmediately(0,0,200,200);
+	    		   		gameWalkPanel.paintImmediately(0,0,800,800);
 	    		   	}	
 	        //gameWalkPanel.changeMap(map.getMapType(),
 	        //                        new Map(map,x1,y1,x2,y2),
 	        //                        enterEntrance.location);
 	    	
-	    	gameWalkPanel.paintImmediately(0,0,200,200); 
+	    	gameWalkPanel.paintImmediately(0,0,800,800); 
 			
 		} // end if
 		
