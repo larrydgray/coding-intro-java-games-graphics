@@ -1,9 +1,11 @@
 package net.sf.javagg.bitmapedit;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * A simple Tile Editor for making game tiles and game icons, very much like a
@@ -150,9 +152,11 @@ public class BitmapEditor extends JComponent implements MouseListener,
 		JMenu optionsMenu = new JMenu("Options");
 		JMenuItem workspace = new JMenuItem("Workspace...");
 		JMenuItem imageSize = new JMenuItem("Image Size...");
+		JMenuItem changeUnderlay = new JMenuItem("Change Underlay Image...");
 		bitmapEditorMenuBar.add(fileMenu);
 		bitmapEditorMenuBar.add(optionsMenu);
 		fileMenu.add(workspace);
+		fileMenu.add(changeUnderlay);
 		optionsMenu.add(imageSize);
 		jf.setJMenuBar(bitmapEditorMenuBar);
 		workspace.addActionListener(new ActionListener() {
@@ -160,6 +164,24 @@ public class BitmapEditor extends JComponent implements MouseListener,
 
 				controller.defaultDir = JOptionPane.showInputDialog(null,
 						"Working directory?");
+			} // actionPerformed
+		});// ActionListener, addActionListener
+		changeUnderlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser chooser = new JFileChooser(new File(javaggRoot + "/images/underlay"));
+				chooser.setFileFilter(new FileNameExtensionFilter(
+						"Image files", "jpg", "jpeg", "png", "gif"));
+				int result = chooser.showOpenDialog(jf);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					try {
+						ImageIcon picked = new ImageIcon(chooser.getSelectedFile().getPath());
+						bottomImage = convertImageIcon(picked);
+						repaint();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(jf,
+								"Could not load that image: " + ex.getMessage());
+					} // catch
+				} // if
 			} // actionPerformed
 		});// ActionListener, addActionListener
 		imageSize.addActionListener(new ActionListener() {
