@@ -91,8 +91,12 @@ public class ImagePanel extends JPanel {
     }
 
     public int inputBuffer() {
-        String bufferNum = JOptionPane.showInputDialog("Buffer#?");
-        return Integer.parseInt(bufferNum);
+        // Same numbering as the 1-9,0 keys and the "Buff:" status bar number
+        // (1-9 = that buffer, 0 = the 10th) - NOT a raw 0-based array index,
+        // which is what this used to parse directly and didn't match either.
+        String bufferNum = JOptionPane.showInputDialog("Buffer# (1-9, 0 for the 10th - same as the number keys)?");
+        int n = Integer.parseInt(bufferNum);
+        return (n == 0) ? 9 : n - 1;
     }
 
     public int inputCol() {
