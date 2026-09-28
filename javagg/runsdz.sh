@@ -36,7 +36,7 @@ def() { # def name module main desc [cwd] [fx]
   APPS+=("$1"); MOD[$1]="$2"; MAIN[$1]="$3"; DESC[$1]="$4"; CWD[$1]="$5"; FX[$1]="${6:-no}"
 }
 
-def iso3d        sdz-3d-swing  net.sf.sdz.iso3d.Iso3D                         "Isometric 3D surface (Swing)"
+def iso3d        sdz-3d-swing  net.sf.sdz.iso3d.IsoTest                       "Isometric 3D surface (Swing)"
 def isotest      sdz-3d-swing  net.sf.sdz.iso3d.IsoTest                       "Iso3D test harness"
 def iso3dfx      sdz-3d-fx     net.sf.sdz.iso3dfx.Simple3DFX                  "Isometric 3D surface (JavaFX/FXML)" "" yes
 def mouse        sdz-input     net.sf.sdz.input.MouseTest                     "Mouse input test"
