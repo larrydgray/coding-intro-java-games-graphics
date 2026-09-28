@@ -41,31 +41,36 @@ public class ImagePanelMouseListener extends MouseAdapter {
         if (me.isShiftDown()) shift = true;
         log("shift:" + shift);
         log("leftClick:" + leftClick);
-        int x = me.getX();
-        int y = me.getY();
-        int col = x / buffers.spriteWidth();
-        int row = y / buffers.spriteHeight();
-        int selectedCol = buffers.getSelectedCol();
-        int selectedRow = buffers.getSelectedRow();
-        boolean selected = buffers.select();
-        // click handling logic
-        if (selected) {
-            if (leftClick) {
-                if (shift) {
-                    buffers.copySprite(col, row);
-                } else {
-                    buffers.setSelectedColRow(col, row);
+        try {
+            // dividing by the current buffer's cell size below throws if it
+            // has no image or was never split into a grid with 'g' yet.
+            buffers.requireGrid(buffers.currentBuffer);
+            int x = me.getX();
+            int y = me.getY();
+            int col = x / buffers.spriteWidth();
+            int row = y / buffers.spriteHeight();
+            boolean selected = buffers.select();
+            // click handling logic
+            if (selected) {
+                if (leftClick) {
+                    if (shift) {
+                        buffers.copySprite(col, row);
+                    } else {
+                        buffers.setSelectedColRow(col, row);
+                    }
+                } else if (rightClick) {
+                    if (shift) {
+                        buffers.moveSprite(col, row);
+                    } else {
+                        buffers.clearSprite(col, row);
+                    }
                 }
-            } else if (rightClick) {
-                if (shift) {
-                    buffers.moveSprite(col, row);
-                } else {
-                    buffers.clearSprite(col, row);
-                }
+            } else {
+                buffers.setSelectedColRow(col, row);
+                buffers.setSelect(true);
             }
-        } else {
-            buffers.setSelectedColRow(col, row);
-            buffers.setSelect(true);
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(imagePanel, ex.getMessage(), "Can't Do That Yet", JOptionPane.WARNING_MESSAGE);
         }
         imagePanel.repaint();
     }

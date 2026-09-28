@@ -241,7 +241,27 @@ public class ImageBuffers {
         return bimage;
     }
 
+    // guard helpers - every sprite-cell operation below divides a buffer's
+    // pixel size by its cols/rows to get the cell size, which throws
+    // ArithmeticException: / by zero on a buffer that's empty or was never
+    // split into a grid with 'g'. Check first and say why instead of crashing.
+    public void requireImage(int bufferIndex) {
+        if (buffers[bufferIndex].buffer == null) {
+            throw new IllegalStateException("Buffer " + (bufferIndex + 1)
+                    + " is empty - press 'n' for a new blank image or 'l' to load one first.");
+        }
+    }
+
+    public void requireGrid(int bufferIndex) {
+        requireImage(bufferIndex);
+        if (buffers[bufferIndex].cols == 0 || buffers[bufferIndex].rows == 0) {
+            throw new IllegalStateException("Buffer " + (bufferIndex + 1)
+                    + " has no grid yet - press 'g' to split it into cells first.");
+        }
+    }
+
     public void clearSprite(int c, int r) {
+        requireGrid(currentBuffer);
         BufferedImage bi = buffer();
         Graphics g = bi.getGraphics();
         int bufc = cols();
@@ -256,6 +276,7 @@ public class ImageBuffers {
     }
 
     public void moveSprite(int fc, int fr, int tc, int tr) {
+        requireGrid(currentBuffer);
         int sprw = spriteWidth();
         int sprh = spriteHeight();
         BufferedImage bi = buffer();
@@ -266,6 +287,7 @@ public class ImageBuffers {
     }
 
     public void copySprite(int tc, int tr) {
+        requireGrid(currentBuffer);
         int fc = getSelectedCol();
         int fr = getSelectedRow();
         int sprw = spriteWidth();
@@ -277,6 +299,8 @@ public class ImageBuffers {
     }
 
     public void pasteToBuffer(int buffer, int col, int row) {
+        requireImage(currentBuffer);
+        requireGrid(buffer);
         int sprw = spriteWidth(buffer);
         int sprh = spriteHeight(buffer);
         BufferedImage bi = buffer();

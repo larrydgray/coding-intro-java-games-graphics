@@ -49,9 +49,13 @@ wasn't recoverable from the article text export, only referenced by URL).
 | `c` | Clear a cell — prompts for column and row (0-indexed) |
 | `m` | Move a cell — prompts for from-column/row and to-column/row |
 | `p` | Paste the current buffer into a cell of another buffer — prompts for destination buffer, column, row |
-| `l` | Load an image into the current buffer — prompts for a filename (same folder as the app) |
-| `s` | Save the current buffer to an image file — prompts for a filename |
+| `l` | Load an image into the current buffer — opens a file chooser (remembers the last folder you used) |
+| `s` | Save the current buffer to a PNG file — opens a file chooser (remembers the last folder, confirms before overwriting) |
 | `n` | Create a new blank buffer — prompts for width and height in pixels |
+| `h` | Show a help dialog listing all of these shortcuts |
+
+`c`, `m`, and `p` need the buffer(s) involved to already have an image and a grid (`g`) — if not, you get a
+message dialog explaining what to do first instead of a crash.
 
 **Mouse** (`ImagePanelMouseListener`), once a cell is selected:
 
@@ -75,8 +79,13 @@ shift-right-click (move), clear a cell with right-click, and finally press `s` w
 in view to save the assembled sprite strip to a file.
 
 ---
-*Ported from softwaredeveloperzone.com. Two small quirks preserved from the original source:*
+*Ported from softwaredeveloperzone.com. One small quirk preserved from the original source:*
 *`ImagePanel.paintComponent` writes `if (buffers.buffer() == null) ; else g.drawImage(...);` —*
 *an empty-statement `if` that reads oddly but is logically correct (draws only when there's a*
-*buffer to draw); and `ImagePanelKeyListener`'s `case 'o':` is missing a `break` before falling*
-*into `default:`, which is harmless here since `default` does nothing.*
+*buffer to draw).*
+
+*Since the original port, `l`/`s` were switched from a raw filename prompt to a `JFileChooser`*
+*(remembering the last folder used), `c`/`m`/`p` now show a message dialog instead of crashing*
+*with an `ArithmeticException` when the buffer(s) involved have no image or grid yet, and `h`*
+*was added to show a help dialog. `ImagePanelKeyListener`'s `case 'o':` also picked up the*
+*`break` it was originally missing (harmless either way, since `default` does nothing).*

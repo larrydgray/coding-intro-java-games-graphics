@@ -38,7 +38,7 @@ class SpriteOrganizer extends JFrame {
 
         // ui status methods
         public void updateStats() {
-            String status = "Buff:" + (buffers.currentBuffer + 1) + " BufW:" + buffers.width() + " BufH:" + buffers.height();
+            String status = "H-Help  |  Buff:" + (buffers.currentBuffer + 1) + " BufW:" + buffers.width() + " BufH:" + buffers.height();
             if (buffers.cols() != 0) {
                 status += " BufC:" + buffers.cols() + " BufR:" + buffers.rows();
                 status += " SprW:" + buffers.spriteWidth() + " SprH:" + buffers.spriteHeight();
