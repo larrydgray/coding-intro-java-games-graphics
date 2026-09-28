@@ -2,7 +2,9 @@
 package net.sf.sdz.sprites;
 
 import java.awt.event.*;
+import java.io.File;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Keyboard shortcuts for the Sprite Organizer: 0-9 selects a buffer, l/g/c/m/n/p/s/o
@@ -38,23 +40,42 @@ public class ImagePanelKeyListener extends KeyAdapter {
     }
 
     void loadImage() {
-        String fileName = JOptionPane.showInputDialog("Enter File Name");
-        if (fileName == null) {
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+        chooser.setDialogTitle("Load Image Into Buffer " + (buffers.currentBuffer + 1));
+        chooser.setFileFilter(new FileNameExtensionFilter(
+                "Image files (*.png, *.jpg, *.jpeg, *.gif)", "png", "jpg", "jpeg", "gif"));
+        int result = chooser.showOpenDialog(imagePanel);
+        if (result != JFileChooser.APPROVE_OPTION) {
             System.out.println("The user canceled");
         } else {
-            buffers.loadImage(fileName, imagePanel);
+            buffers.loadImage(chooser.getSelectedFile().getAbsolutePath(), imagePanel);
             imagePanel.repaint();
         }
     }
 
     void saveImage() {
-        String fileName = JOptionPane.showInputDialog("Enter File Name");
-        if (fileName == null) {
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+        chooser.setDialogTitle("Save Buffer " + (buffers.currentBuffer + 1) + " As");
+        chooser.setFileFilter(new FileNameExtensionFilter("PNG images (*.png)", "png"));
+        int result = chooser.showSaveDialog(imagePanel);
+        if (result != JFileChooser.APPROVE_OPTION) {
             System.out.println("The user canceled");
-        } else {
-            buffers.saveImage(fileName);
-            imagePanel.repaint();
+            return;
         }
+        File file = chooser.getSelectedFile();
+        if (!file.getName().toLowerCase().endsWith(".png")) {
+            file = new File(file.getParentFile(), file.getName() + ".png");
+        }
+        if (file.exists()) {
+            int overwrite = JOptionPane.showConfirmDialog(imagePanel,
+                    file.getName() + " already exists. Overwrite?",
+                    "Confirm Overwrite", JOptionPane.YES_NO_OPTION);
+            if (overwrite != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+        buffers.saveImage(file.getAbsolutePath());
+        imagePanel.repaint();
     }
 
     void splitImage() {
