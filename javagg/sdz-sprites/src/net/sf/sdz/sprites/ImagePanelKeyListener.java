@@ -1,7 +1,9 @@
 // Author Larry Gray CPL Common Public License  Software Developer Zone
 package net.sf.sdz.sprites;
 
+import java.awt.Dialog;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
@@ -118,31 +120,46 @@ public class ImagePanelKeyListener extends KeyAdapter {
         JOptionPane.showMessageDialog(imagePanel, ex.getMessage(), "Can't Do That Yet", JOptionPane.WARNING_MESSAGE);
     }
 
+    // kept modeless and reused so 'h' doesn't stack up copies, and so you can
+    // leave it open on screen for reference while still using the app.
+    private JDialog helpDialog = null;
+
     void showHelp() {
-        String help =
-                "BUFFERS\n" +
-                "  1-9, 0   Select buffer 1-10\n" +
-                "  n        New blank buffer (asks width/height in pixels)\n" +
-                "  l        Load an image file into the current buffer\n" +
-                "  s        Save the current buffer to a PNG file\n\n" +
-                "GRID (do this before c/m/p or clicking on a buffer)\n" +
-                "  g        Split the current buffer into a grid (asks cols/rows)\n" +
-                "  o        Toggle the grid overlay on/off\n\n" +
-                "SPRITES\n" +
-                "  c        Clear a cell (asks col/row)\n" +
-                "  m        Move a cell to another cell (asks from, then to)\n" +
-                "  p        Paste this whole buffer into a cell of another buffer\n" +
-                "           (asks destination buffer#, col, row)\n\n" +
-                "MOUSE (on the image area, after 'g')\n" +
-                "  Click              Select a cell\n" +
-                "  Shift+Click        Copy the selected sprite onto the clicked cell\n" +
-                "  Right-Click        Clear the clicked cell\n" +
-                "  Shift+Right-Click  Move the selected sprite onto the clicked cell\n\n" +
-                "  h        Show this help";
-        JTextArea textArea = new JTextArea(help);
-        textArea.setEditable(false);
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        JOptionPane.showMessageDialog(imagePanel, textArea, "Sprite Organizer Help", JOptionPane.PLAIN_MESSAGE);
+        if (helpDialog == null) {
+            String help =
+                    "BUFFERS\n" +
+                    "  1-9, 0   Select buffer 1-10\n" +
+                    "  n        New blank buffer (asks width/height in pixels)\n" +
+                    "  l        Load an image file into the current buffer\n" +
+                    "  s        Save the current buffer to a PNG file\n\n" +
+                    "GRID (do this before c/m/p or clicking on a buffer)\n" +
+                    "  g        Split the current buffer into a grid (asks cols/rows)\n" +
+                    "  o        Toggle the grid overlay on/off\n\n" +
+                    "SPRITES\n" +
+                    "  c        Clear a cell (asks col/row)\n" +
+                    "  m        Move a cell to another cell (asks from, then to)\n" +
+                    "  p        Paste this whole buffer into a cell of another buffer\n" +
+                    "           (asks destination buffer#, col, row)\n\n" +
+                    "MOUSE (on the image area, after 'g')\n" +
+                    "  Click              Select a cell\n" +
+                    "  Shift+Click        Copy the selected sprite onto the clicked cell\n" +
+                    "  Right-Click        Clear the clicked cell\n" +
+                    "  Shift+Right-Click  Move the selected sprite onto the clicked cell\n\n" +
+                    "  h        Show this help";
+            JTextArea textArea = new JTextArea(help);
+            textArea.setEditable(false);
+            textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+            textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            Window owner = SwingUtilities.getWindowAncestor(imagePanel);
+            helpDialog = new JDialog(owner, "Sprite Organizer Help", Dialog.ModalityType.MODELESS);
+            helpDialog.getContentPane().add(textArea);
+            helpDialog.pack();
+            helpDialog.setResizable(false);
+            helpDialog.setLocationRelativeTo(owner);
+        }
+        helpDialog.setVisible(true);
+        helpDialog.toFront();
     }
 
     // main listener methods that use utility methods
