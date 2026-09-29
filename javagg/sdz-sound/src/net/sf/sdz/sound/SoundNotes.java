@@ -43,12 +43,14 @@ public class SoundNotes {
         JButton prevButton = new JButton("Prev");
         JButton nextButton = new JButton("Next");
         JButton randomButton = new JButton("Random Instrument");
+        JButton testNoteButton = new JButton("Test Note (2s)");
         JLabel instrumentLabel = new JLabel(instr[instrument].toString());
         frame.getContentPane().add(pane);
         pane.add(playButton);
         pane.add(prevButton);
         pane.add(nextButton);
         pane.add(randomButton);
+        pane.add(testNoteButton);
         pane.add(instrumentLabel);
         frame.pack();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -87,6 +89,21 @@ public class SoundNotes {
                 mc[1].programChange(instr[instrument].getPatch().getProgram());
                 instrumentLabel.setText(instr[instrument].toString());
                 frame.pack();
+            }
+        });
+        // Diagnostic: a single held note, long enough to clearly tell apart
+        // a click at the very start (attack), noise through the whole note
+        // (the sustain), or a click right as it cuts off (release) - each
+        // points to a different cause.
+        testNoteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    mc[1].noteOn(60, 90);
+                    Thread.sleep(2000);
+                    mc[1].noteOff(60);
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
             }
         });
     }
