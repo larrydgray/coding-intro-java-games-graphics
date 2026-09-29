@@ -1,6 +1,7 @@
 package net.sf.sdz.sound;
 
 import javax.sound.midi.*;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -44,6 +45,7 @@ public class SoundNotes {
         JButton nextButton = new JButton("Next");
         JButton randomButton = new JButton("Random Instrument");
         JButton testNoteButton = new JButton("Test Note (2s)");
+        JButton testToneButton = new JButton("Test Tone (No MIDI)");
         JLabel instrumentLabel = new JLabel(instr[instrument].toString());
         frame.getContentPane().add(pane);
         pane.add(playButton);
@@ -51,6 +53,7 @@ public class SoundNotes {
         pane.add(nextButton);
         pane.add(randomButton);
         pane.add(testNoteButton);
+        pane.add(testToneButton);
         pane.add(instrumentLabel);
         frame.pack();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -106,6 +109,38 @@ public class SoundNotes {
                 }
             }
         });
+        // Diagnostic: bypasses MidiSystem/Synthesizer entirely and plays a
+        // plain sine wave through javax.sound.sampled. If this ALSO
+        // crackles, the noise is in the system audio pipeline (drivers,
+        // mixer, buffer settings) below Java Sound generally, not in
+        // Gervill's MIDI synthesis specifically - meaning there'd be
+        // nothing left to fix in this file at all.
+        testToneButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                playTestTone();
+            }
+        });
+    }
+
+    void playTestTone() {
+        try {
+            float sampleRate = 44100f;
+            double freqHz = 440.0; // A4
+            int numSamples = (int) (2 * sampleRate);
+            byte[] buffer = new byte[numSamples * 2]; // 16-bit mono
+            for (int i = 0; i < numSamples; i++) {
+                double angle = 2.0 * Math.PI * i * freqHz / sampleRate;
+                short sample = (short) (Math.sin(angle) * 0.5 * Short.MAX_VALUE);
+                buffer[i * 2] = (byte) (sample & 0xff);
+                buffer[i * 2 + 1] = (byte) ((sample >> 8) & 0xff);
+            }
+            AudioFormat format = new AudioFormat(sampleRate, 16, 1, true, false);
+            Clip clip = AudioSystem.getClip();
+            clip.open(format, buffer, 0, buffer.length);
+            clip.start();
+        } catch (LineUnavailableException lue) {
+            lue.printStackTrace();
+        }
     }
 
     void play10Notes() {
