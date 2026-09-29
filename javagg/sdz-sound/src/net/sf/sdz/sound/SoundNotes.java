@@ -6,9 +6,10 @@ import java.awt.event.*;
 
 /**
  * Plays random MIDI notes through the system synthesizer's default
- * soundbank. Play plays 10 random notes of random duration; Prev/Next
- * cycle through the 128 available instruments (shown in a label), also
- * printing the full instrument list to the console on startup.
+ * soundbank. Play plays 10 random notes of random duration; Prev/Next step
+ * through the 128 available instruments one at a time, Random jumps to any
+ * one of them (shown in a label), also printing the full instrument list
+ * to the console on startup.
  */
 public class SoundNotes {
 
@@ -41,11 +42,13 @@ public class SoundNotes {
         JButton playButton = new JButton("Play");
         JButton prevButton = new JButton("Prev");
         JButton nextButton = new JButton("Next");
+        JButton randomButton = new JButton("Random Instrument");
         JLabel instrumentLabel = new JLabel(instr[instrument].toString());
         frame.getContentPane().add(pane);
         pane.add(playButton);
         pane.add(prevButton);
         pane.add(nextButton);
+        pane.add(randomButton);
         pane.add(instrumentLabel);
         frame.pack();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -77,12 +80,26 @@ public class SoundNotes {
                 frame.pack();
             }
         });
+        randomButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                instrument = (int) (Math.random() * instr.length);
+                synth.loadInstrument(instr[instrument]);
+                mc[1].programChange(instr[instrument].getPatch().getProgram());
+                instrumentLabel.setText(instr[instrument].toString());
+                frame.pack();
+            }
+        });
     }
 
     void play10Notes() {
         for (int i = 0; i < 10; i++) {
             note = (int) (Math.random() * 127 + 1);
-            duration = (int) (Math.random() * 100 + 1);
+            // Was Math.random()*100+1 (1-100), so duration*10 could be as
+            // short as 10ms - cutting a note off that fast, before its
+            // attack/decay envelope finishes, is what causes an audible
+            // pop/click. 20-79 -> 200-790ms gives the envelope room to
+            // actually finish while still varying per note.
+            duration = (int) (Math.random() * 60 + 20);
             try {
                 // Velocity must be 0-127 (it's a 7-bit MIDI value); 400 was
                 // out of range and landed at or past max loudness. And with
