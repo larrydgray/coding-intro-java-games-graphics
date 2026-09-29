@@ -84,8 +84,15 @@ public class SoundNotes {
             note = (int) (Math.random() * 127 + 1);
             duration = (int) (Math.random() * 100 + 1);
             try {
-                mc[1].noteOn(note, 400);
+                // Velocity must be 0-127 (it's a 7-bit MIDI value); 400 was
+                // out of range and landed at or past max loudness. And with
+                // no noteOff below, each note kept ringing under the next
+                // one - by note 10 you'd have up to 10 pitches stacked on
+                // top of each other, which reads as loud, dissonant static
+                // rather than 10 distinct notes.
+                mc[1].noteOn(note, 90);
                 Thread.sleep(duration * 10);
+                mc[1].noteOff(note);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
