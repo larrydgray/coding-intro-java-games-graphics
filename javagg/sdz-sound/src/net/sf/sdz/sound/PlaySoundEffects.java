@@ -8,11 +8,13 @@ import java.awt.event.*;
 /**
  * Loads a handful of WAV sound effects into Clips and plays each one on a
  * button press, via a Swing panel with one button per effect. Needs the
- * .wav files (swim1.wav, pond1.wav, splash1.wav, walking1.wav,
- * trapcatch1.wav, water1.wav, beaverwalk1.wav) on the working directory -
- * each one loads independently, so whichever files you actually have get a
- * button; missing ones are just skipped (with a note on the console) rather
- * than the whole app failing to start over one missing file.
+ * .wav files (bulldozer.wav, drill.wav, mine_dig.wav,
+ * mine_place_explosion.wav - mechanical/environmental sound effects, not
+ * voice lines, so they read as generic sound-effect demos rather than
+ * quoting a specific game; retheme freely) on the working directory - each
+ * one loads independently, so whichever files you actually have get a
+ * button; missing ones are just skipped (with a note on the console)
+ * rather than the whole app failing to start over one missing file.
  */
 public class PlaySoundEffects {
 
@@ -21,128 +23,75 @@ public class PlaySoundEffects {
         JPanel aPanel = new JPanel();
         aFrame.setContentPane(aPanel);
 
-        Clip pondClip = loadClip("pond1.wav");
-        Clip swimClip = loadClip("swim1.wav");
-        Clip splashClip = loadClip("splash1.wav");
-        Clip walkingClip = loadClip("walking1.wav");
-        Clip waterClip = loadClip("water1.wav");
-        Clip trapCatchClip = loadClip("trapcatch1.wav");
-        //Clip trapPlaceClip = loadClip("trapplace1.wav");
-        Clip beaverClip = loadClip("beaverwalk1.wav");
+        Clip bulldozerClip = loadClip("bulldozer.wav");
+        Clip drillClip = loadClip("drill.wav");
+        Clip mineDigClip = loadClip("mine_dig.wav");
+        Clip explosionClip = loadClip("mine_place_explosion.wav");
 
-        if (pondClip != null) {
-            JButton pondButton = new JButton("Pond");
-            aPanel.add(pondButton);
-            pondButton.addActionListener(new ActionListener() {
+        if (bulldozerClip != null) {
+            JButton bulldozerButton = new JButton("Bulldozer");
+            aPanel.add(bulldozerButton);
+            bulldozerButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     try {
-                        pondClip.start();
+                        bulldozerClip.start();
                         Thread.sleep(3000);
-                        pondClip.stop();
+                        bulldozerClip.stop();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
-        if (swimClip != null) {
-            JButton swimButton = new JButton("Swim");
-            aPanel.add(swimButton);
-            swimButton.addActionListener(new ActionListener() {
+        if (drillClip != null) {
+            JButton drillButton = new JButton("Drill");
+            aPanel.add(drillButton);
+            drillButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     try {
-                        swimClip.start();
+                        drillClip.start();
                         Thread.sleep(3000);
-                        swimClip.stop();
+                        drillClip.stop();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
-        if (splashClip != null) {
-            JButton splashButton = new JButton("Splash");
-            aPanel.add(splashButton);
-            splashButton.addActionListener(new ActionListener() {
+        if (mineDigClip != null) {
+            JButton mineDigButton = new JButton("Mine Dig");
+            aPanel.add(mineDigButton);
+            mineDigButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     try {
-                        splashClip.start();
+                        mineDigClip.start();
                         Thread.sleep(3000);
-                        splashClip.stop();
+                        mineDigClip.stop();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
-        if (walkingClip != null) {
-            JButton walkingButton = new JButton("Walking");
-            aPanel.add(walkingButton);
-            walkingButton.addActionListener(new ActionListener() {
+        if (explosionClip != null) {
+            JButton explosionButton = new JButton("Explosion");
+            aPanel.add(explosionButton);
+            explosionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     try {
-                        walkingClip.start();
+                        explosionClip.start();
                         Thread.sleep(3000);
-                        walkingClip.stop();
+                        explosionClip.stop();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
-        if (waterClip != null) {
-            JButton waterButton = new JButton("Water");
-            aPanel.add(waterButton);
-            waterButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    try {
-                        waterClip.start();
-                        Thread.sleep(3000);
-                        waterClip.stop();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-        if (trapCatchClip != null) {
-            JButton trapCatchButton = new JButton("TrapCatch");
-            aPanel.add(trapCatchButton);
-            trapCatchButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    try {
-                        trapCatchClip.start();
-                        Thread.sleep(3000);
-                        trapCatchClip.stop();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-        // trapplace1.wav is left out here too - see the README (one file
-        // apparently threw an exception due to its exact format, which was
-        // never resolved in the original source).
-        if (beaverClip != null) {
-            JButton beaverButton = new JButton("Beaver");
-            aPanel.add(beaverButton);
-            beaverButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    try {
-                        beaverClip.start();
-                        Thread.sleep(3000);
-                        beaverClip.stop();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-
         if (aPanel.getComponentCount() == 0) {
             aPanel.add(new JLabel("<html>No .wav files found in this folder.<br>"
-                    + "Place swim1.wav, pond1.wav, splash1.wav, walking1.wav,<br>"
-                    + "trapcatch1.wav, water1.wav, beaverwalk1.wav here and restart.</html>"));
+                    + "Place bulldozer.wav, drill.wav, mine_dig.wav,<br>"
+                    + "and mine_place_explosion.wav here and restart.</html>"));
         }
 
         aFrame.pack();
