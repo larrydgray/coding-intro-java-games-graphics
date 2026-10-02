@@ -1,5 +1,6 @@
 package net.sf.sdz.sound;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.io.*;
 import javax.sound.sampled.*;
@@ -50,12 +51,18 @@ public class PlaySoundEffects {
 
     public PlaySoundEffects() {
         JFrame aFrame = new JFrame("Sound Effects");
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        aFrame.setContentPane(contentPanel);
+
+        JCheckBox fullLengthCheckBox = new JCheckBox("Play full length (instead of stopping after 3 seconds)");
+        contentPanel.add(fullLengthCheckBox, BorderLayout.NORTH);
+
         JPanel aPanel = new JPanel();
         // A plain FlowLayout would try to lay all 20 buttons out in a single
         // row when the frame packs to its preferred size - a grid wraps them
         // into a sane-sized window instead.
         aPanel.setLayout(new GridLayout(0, 4, 5, 5));
-        aFrame.setContentPane(aPanel);
+        contentPanel.add(aPanel, BorderLayout.CENTER);
 
         for (String[] effect : EFFECTS) {
             String fileName = effect[0];
@@ -67,9 +74,19 @@ public class PlaySoundEffects {
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
                         try {
+                            // Rewind first - otherwise pressing the same
+                            // button again resumes from wherever playback
+                            // was last stopped (or does nothing at all once
+                            // it's reached the end) instead of restarting.
+                            clip.setFramePosition(0);
                             clip.start();
-                            Thread.sleep(3000);
-                            clip.stop();
+                            if (!fullLengthCheckBox.isSelected()) {
+                                Thread.sleep(3000);
+                                clip.stop();
+                            }
+                            // "full length" just starts it and returns -
+                            // Clip stops itself once it reaches the end of
+                            // its own data, no manual stop() needed.
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
