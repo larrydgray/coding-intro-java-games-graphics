@@ -9,14 +9,15 @@ you find there into `.wav` for use here).
 
 ## Playing WAV Sound Effects
 
-`PlaySoundEffects` loads a handful of `.wav` files (`bulldozer.wav`, `drill.wav`,
-`mine_dig.wav`, `mine_place_explosion.wav` — plain mechanical/environmental sound effects,
-not voice lines, so it reads as a generic effects demo rather than quoting a specific game;
-retheme freely) each into its own `Clip`, and shows a Swing panel with one button per
-effect that starts the clip, waits 3 seconds, then stops it:
+`PlaySoundEffects` loads a set of 20 `.wav` files from a `sound/` folder next to the class
+(bundled in this repo — a mix of construction sounds and nature ambience: birds, campfire,
+cave drips, crickets, a dump truck backing up, an excavator, fire starting, frogs, a
+jackhammer, water, and wind; no voice lines, so it reads as a generic effects demo rather than
+quoting any specific game) each into its own `Clip`, and shows a Swing panel with one button
+per effect that starts the clip, waits 3 seconds, then stops it:
 
 ```java
-AudioInputStream in = AudioSystem.getAudioInputStream(new File("bulldozer.wav"));
+AudioInputStream in = AudioSystem.getAudioInputStream(new File("sound/bulldozer.wav"));
 Clip clip = AudioSystem.getClip();
 clip.open(in);
 ...
@@ -25,20 +26,25 @@ Thread.sleep(3000);
 clip.stop();
 ```
 
-The `.wav` files themselves need to be supplied separately (they're not part of this repo) and
-placed on the working directory when running the demo. Each file loads independently — missing
-ones are skipped (with a note on the console) rather than the whole app failing to start over
-one missing file, and if none are found the window still opens with a label saying what's
-needed instead of nothing appearing at all. (The original article's set was a small
-beaver-trapping-game effect set distributed as a linked `wav.zip` download that was never
-recovered when this was ported — `swim1.wav`/`pond1.wav`/`splash1.wav`/`walking1.wav`/
-`trapcatch1.wav`/`water1.wav`/`beaverwalk1.wav`/`trapplace1.wav`, the last of which had its
-button commented out in the original source since it threw an exception due to its exact
-format, never resolved. The four files above are simply a different set with the same
-one-button-per-effect shape; swap in whatever `.wav` files you like the same way.) There's also
-a lot of repetition here (one file/stream/clip/button per effect) that the original article
-calls out as ripe for refactoring into a single reusable "sound effect" object — left as-is to
-match the source.
+Each file loads independently — missing ones are skipped (with a note on the console) rather
+than the whole app failing to start over one missing file, and if none are found the window
+still opens with a label saying where to put them instead of nothing appearing at all. The
+original article hand-wrote one file/stream/clip/button/listener block per effect for a
+handful of effects, and called that repetition out itself as ripe for refactoring into a
+single reusable object. At 20 effects that repetition would mean ~20 nearly-identical
+copy-pasted blocks, so this builds them from one `EFFECTS` array of filename/label pairs in a
+loop instead — the refactor the original suggested but didn't do. `aPanel` uses a `GridLayout`
+rather than the default `FlowLayout` so 20 buttons wrap into a sane-sized window instead of one
+very wide row.
+
+(The original article's own effect set was a small beaver-trapping-game set distributed as a
+linked `wav.zip` download that was never recovered when this was ported —
+`swim1.wav`/`pond1.wav`/`splash1.wav`/`walking1.wav`/`trapcatch1.wav`/`water1.wav`/
+`beaverwalk1.wav`/`trapplace1.wav`, the last of which had its button commented out in the
+original source since it threw an exception due to its exact format, never resolved. The
+effects bundled here are a different set — made in Audacity from freesound.org source
+material — with the same one-button-per-effect idea; swap in whatever `.wav` files you like by
+editing the `EFFECTS` array.)
 
 ## Playing MIDI Musical Notes
 
